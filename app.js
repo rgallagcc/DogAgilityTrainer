@@ -1,13 +1,5 @@
 // INITIAL SKILLS
-const skills = [
-    "Weave",
-    "Jump",
-    "Check Check",
-    "Round",
-    "Tunnel",
-    "Stay",
-    "Recall",
-];
+const skills = ["Weave", "Jump", "Check Check", "Round", "Tunnel", "Stay", "Recall"];
 
 // Load saved sessions
 let sessions = JSON.parse(localStorage.getItem("agilitySessions")) || [];
@@ -20,6 +12,13 @@ const closeModal = document.getElementById("closeModal");
 const sessionForm = document.getElementById("sessionForm");
 const skillSelect = document.getElementById("skillSelect");
 
+// --- NEW: dynamic field groups ---
+const groupWeave = document.getElementById("group-weave");
+const groupJump = document.getElementById("group-jump");
+const groupTunnel = document.getElementById("group-tunnel");
+const groupRound = document.getElementById("group-round");
+const groupCheck = document.getElementById("group-check");
+
 // Populate dropdown
 skills.forEach(s => {
     const opt = document.createElement("option");
@@ -28,15 +27,26 @@ skills.forEach(s => {
 });
 
 // Show modal
-addSessionBtn.onclick = () => { modal.classList.remove("hidden"); };
+addSessionBtn.onclick = () => modal.classList.remove("hidden");
+closeModal.onclick = () => modal.classList.add("hidden");
 
-// Hide modal
-closeModal.onclick = () => { modal.classList.add("hidden"); };
+// NEW: Show relevant fields based on skill
+skillSelect.addEventListener("change", () => {
+    const val = skillSelect.value;
 
-// Generate skill cards
+    // Hide all groups
+    document.querySelectorAll(".skill-group").forEach(g => g.style.display = "none");
+
+    if (val === "Weave") groupWeave.style.display = "block";
+    if (val === "Jump") groupJump.style.display = "block";
+    if (val === "Tunnel") groupTunnel.style.display = "block";
+    if (val === "Round") groupRound.style.display = "block";
+    if (val === "Check Check") groupCheck.style.display = "block";
+});
+
+// Render skill cards
 function renderSkills() {
     skillsContainer.innerHTML = "";
-
     skills.forEach(skill => {
         const card = document.createElement("div");
         card.classList.add("skill-card");
@@ -48,18 +58,23 @@ function renderSkills() {
         const filtered = sessions.filter(s => s.skill === skill);
 
         filtered.forEach(s => {
-            const sessionDiv = document.createElement("div");
-            sessionDiv.classList.add("session");
+            const d = document.createElement("div");
+            d.classList.add("session");
 
-            sessionDiv.innerHTML = `
+            d.innerHTML = `
                 <small>${s.date}</small>
                 <strong>${s.progress}</strong><br>
-                ${s.weave ? "Weave distance: " + s.weave + "m<br>" : ""}
-                ${s.jump ? "Jump height: " + s.jump + "cm<br>" : ""}
+                ${s.poles ? "Poles: " + s.poles + "<br>" : ""}
+                ${s.entryAngle ? "Entry angle: " + s.entryAngle + "<br>" : ""}
+                ${s.jumpHeight ? "Jump height: " + s.jumpHeight + "cm<br>" : ""}
+                ${s.jumpType ? "Jump type: " + s.jumpType + "<br>" : ""}
+                ${s.tunnelShape ? "Tunnel shape: " + s.tunnelShape + "<br>" : ""}
+                ${s.turnDirection ? "Turn: " + s.turnDirection + "<br>" : ""}
+                ${s.distance ? "Distance: " + s.distance + "m<br>" : ""}
                 ${s.notes}
             `;
 
-            card.appendChild(sessionDiv);
+            card.appendChild(d);
         });
 
         skillsContainer.appendChild(card);
@@ -72,16 +87,36 @@ renderSkills();
 sessionForm.addEventListener("submit", e => {
     e.preventDefault();
 
-    const newSession = {
-        skill: document.getElementById("skillSelect").value,
+    const skill = skillSelect.value;
+    let data = {
+        skill,
         progress: document.getElementById("progressSelect").value,
-        weave: document.getElementById("weaveDistance").value,
-        jump: document.getElementById("jumpHeight").value,
         notes: document.getElementById("notes").value,
         date: new Date().toLocaleDateString(),
     };
 
-    sessions.push(newSession);
+    // Add dynamic fields depending on skill
+    if (skill === "Weave") {
+        data.poles = document.getElementById("weavePoles").value;
+        data.entryAngle = document.getElementById("weaveEntryAngle").value;
+    }
+    if (skill === "Jump") {
+        data.jumpHeight = document.getElementById("jumpHeight").value;
+        data.jumpType = document.getElementById("jumpType").value;
+    }
+    if (skill === "Tunnel") {
+        data.tunnelShape = document.getElementById("tunnelShape").value;
+        data.distance = document.getElementById("tunnelDistance").value;
+    }
+    if (skill === "Round") {
+        data.distance = document.getElementById("roundDistance").value;
+        data.turnDirection = document.getElementById("roundDirection").value;
+    }
+    if (skill === "Check Check") {
+        data.turnDirection = document.getElementById("checkDirection").value;
+    }
+
+    sessions.push(data);
     localStorage.setItem("agilitySessions", JSON.stringify(sessions));
 
     sessionForm.reset();
