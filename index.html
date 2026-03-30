@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Agility Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+    <h1>🐶 Dog Agility Training Tracker</h1>
+    <button id="addSessionBtn">+ Add Weekly Training Session</button>
+</header>
+
+<main id="skillsContainer">
+    <!-- Skill cards generated dynamically -->
+</main>
+
+<!-- Modal -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2>Add Training Session</h2>
+
+        <form id="sessionForm">
+            <label>Skill:</label>
+            <select id="skillSelect" required></select>
+
+            <label>Progress Level:</label>
+            <select id="progressSelect" required>
+                <option>New (just introduced)</option>
+                <option>Learning (still luring)</option>
+                <option>Medium success</option>
+                <option>Good consistency</option>
+                <option>Mastered (voice only)</option>
+            </select>
+
+            <label>Weave Distance (meters):</label>
+            <input type="number" id="weaveDistance" placeholder="optional" />
+
+            <label>Jump Height (cm):</label>
+            <input type="number" id="jumpHeight" placeholder="optional" />
+
+            <label>Notes:</label>
+            <textarea id="notes" placeholder="Anything useful..."></textarea>
+
+            <button type="submit" class="submitBtn">Save Session</button>
+        </form>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
