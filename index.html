@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dog Agility Tracker</title>
+
+    <!-- Link to CSS -->
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
 <header>
@@ -14,7 +17,7 @@
 </header>
 
 <main id="skillsContainer">
-    <!-- Skill cards generated dynamically -->
+    <!-- Skill cards generated via JS -->
 </main>
 
 <!-- Modal -->
@@ -24,9 +27,12 @@
         <h2>Add Training Session</h2>
 
         <form id="sessionForm">
+
+            <!-- Select Skill -->
             <label>Skill:</label>
             <select id="skillSelect" required></select>
 
+            <!-- Progress -->
             <label>Progress Level:</label>
             <select id="progressSelect" required>
                 <option>New (just introduced)</option>
@@ -36,20 +42,97 @@
                 <option>Mastered (voice only)</option>
             </select>
 
-            <label>Weave Distance (meters):</label>
-            <input type="number" id="weaveDistance" placeholder="optional" />
+            <!-- ------------------------------------------ -->
+            <!-- Dynamic Skill Forms                        -->
+            <!-- These appear ONLY when chosen in dropdown -->
+            <!-- ------------------------------------------ -->
 
-            <label>Jump Height (cm):</label>
-            <input type="number" id="jumpHeight" placeholder="optional" />
+            <!-- WEAVE -->
+            <div id="group-weave" class="skill-group" style="display:none;">
+                <h3>Weave Details</h3>
 
+                <label>Number of Poles:</label>
+                <input type="number" id="weavePoles" placeholder="e.g., 6 or 12" />
+
+                <label>Entry Angle:</label>
+                <select id="weaveEntryAngle">
+                    <option value="">Select</option>
+                    <option>Straight</option>
+                    <option>Mild Angle</option>
+                    <option>Sharp Angle</option>
+                </select>
+            </div>
+
+            <!-- JUMP -->
+            <div id="group-jump" class="skill-group" style="display:none;">
+                <h3>Jump Details</h3>
+
+                <label>Jump Height (cm):</label>
+                <input type="number" id="jumpHeight" placeholder="e.g., 40" />
+
+                <label>Jump Type:</label>
+                <select id="jumpType">
+                    <option value="">Select</option>
+                    <option>Single</option>
+                    <option>Double</option>
+                    <option>Spread</option>
+                    <option>Long Jump</option>
+                </select>
+            </div>
+
+            <!-- TUNNEL -->
+            <div id="group-tunnel" class="skill-group" style="display:none;">
+                <h3>Tunnel Details</h3>
+
+                <label>Tunnel Shape:</label>
+                <select id="tunnelShape">
+                    <option value="">Select</option>
+                    <option>Straight</option>
+                    <option>Slight Curve</option>
+                    <option>Tight Curve</option>
+                </select>
+
+                <label>Entry Distance (m):</label>
+                <input type="number" id="tunnelDistance" placeholder="e.g., 3" />
+            </div>
+
+            <!-- ROUND -->
+            <div id="group-round" class="skill-group" style="display:none;">
+                <h3>Round (Send Around) Details</h3>
+
+                <label>Send Distance (m):</label>
+                <input type="number" id="roundDistance" placeholder="e.g., 2.5" />
+
+                <label>Direction:</label>
+                <select id="roundDirection">
+                    <option value="">Select</option>
+                    <option>Clockwise</option>
+                    <option>Anti-Clockwise</option>
+                </select>
+            </div>
+
+            <!-- CHECK CHECK -->
+            <div id="group-check" class="skill-group" style="display:none;">
+                <h3>Check Check Details</h3>
+
+                <label>Turn Direction:</label>
+                <select id="checkDirection">
+                    <option value="">Select</option>
+                    <option>Left</option>
+                    <option>Right</option>
+                </select>
+            </div>
+
+            <!-- Notes -->
             <label>Notes:</label>
-            <textarea id="notes" placeholder="Anything useful..."></textarea>
+            <textarea id="notes" placeholder="Anything useful..." rows="3"></textarea>
 
             <button type="submit" class="submitBtn">Save Session</button>
         </form>
     </div>
 </div>
 
+<!-- JavaScript -->
 <script src="app.js"></script>
 
 </body>
