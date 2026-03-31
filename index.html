@@ -6,29 +6,32 @@
     <title>Dog Agility Tracker</title>
 
     <!-- Link to CSS -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
     <h1>🐶 Dog Agility Training Tracker</h1>
-    <button id="addSessionBtn">+ Add Weekly Training Session</button>
+
+    <div>
+        <button id="resetBtn" style="margin-right:10px;">Reset All</button>
+        <button id="addSessionBtn">+ Add Weekly Training Session</button>
+    </div>
 </header>
 
-<main id="skillsContainer">
-    <!-- Skill cards generated via JS -->
-</main>
+<main id="skillsContainer"></main>
 
 <!-- Modal -->
 <div id="modal" class="modal hidden">
     <div class="modal-content">
         <span id="closeModal" class="close">&times;</span>
+
         <h2>Add Training Session</h2>
 
         <form id="sessionForm">
 
-            <!-- Select Skill -->
+            <!-- Skill -->
             <label>Skill:</label>
             <select id="skillSelect" required></select>
 
@@ -42,10 +45,7 @@
                 <option>Mastered (voice only)</option>
             </select>
 
-            <!-- ------------------------------------------ -->
-            <!-- Dynamic Skill Forms                        -->
-            <!-- These appear ONLY when chosen in dropdown -->
-            <!-- ------------------------------------------ -->
+            <!-- SKILL GROUPS (dynamic fields) -->
 
             <!-- WEAVE -->
             <div id="group-weave" class="skill-group" style="display:none;">
@@ -98,7 +98,7 @@
 
             <!-- ROUND -->
             <div id="group-round" class="skill-group" style="display:none;">
-                <h3>Round (Send Around) Details</h3>
+                <h3>Send Around Details</h3>
 
                 <label>Send Distance (m):</label>
                 <input type="number" id="roundDistance" placeholder="e.g., 2.5" />
@@ -129,10 +129,11 @@
 
             <button type="submit" class="submitBtn">Save Session</button>
         </form>
+
     </div>
 </div>
 
-<!-- JavaScript -->
+<!-- JS -->
 <script src="app.js"></script>
 
 </body>
